@@ -16,7 +16,7 @@ public class User extends Model {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     public Long id;
-    public String emaiId;
+    public String emailId;
     public String password;
     @OneToOne
     public Profile profile;

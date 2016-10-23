@@ -1,6 +1,4 @@
 package controllers;
-
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,22 +10,22 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import javax.inject.Inject;
 
 
 /**
  * Created by lubuntu on 10/22/16.
  */
-public class Application extends Controller{
+public class Application extends Controller {
     @Inject
     FormFactory formFactory;
 
     @Inject
     ObjectMapper objectMapper;
+
     public Result login() {
         Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
-        if(loginForm.hasErrors()){
+        if (loginForm.hasErrors()) {
             return ok(loginForm.errorsAsJson());
         }
         ObjectNode userJson = objectMapper.createObjectNode();
@@ -39,9 +37,9 @@ public class Application extends Controller{
         return ok(userJson);
     }
 
-    public Result signup(){
+    public Result signup() {
         Form<SignupForm> signupForm = formFactory.form(SignupForm.class).bindFromRequest();
-        if(signupForm.hasErrors()){
+        if (signupForm.hasErrors()) {
             return ok(signupForm.errorsAsJson());
         }
         Profile profile = new Profile(signupForm.data().get("firstName"), signupForm.data().get("lastName"));
