@@ -29,10 +29,10 @@ public class Application extends Controller {
             return ok(loginForm.errorsAsJson());
         }
         ObjectNode userJson = objectMapper.createObjectNode();
-        User user = User.find.where().eq("email", loginForm.data().get("email")).findUnique();
+        User user = User.find.where().eq("email_id", loginForm.data().get("emailId")).findUnique();
 
         userJson.put("id", user.id);
-        userJson.put("email", user.emaiId);
+        userJson.put("email_id", user.emailId);
         userJson.put("password", user.password);
         return ok(userJson);
     }
@@ -44,7 +44,7 @@ public class Application extends Controller {
         }
         Profile profile = new Profile(signupForm.data().get("firstName"), signupForm.data().get("lastName"));
         Profile.db().save(profile);
-        User user = new User(signupForm.data().get("email"), signupForm.data().get("password"));
+        User user = new User(signupForm.data().get("email_id"), signupForm.data().get("password"));
         user.profile = profile;
         user.db().save(user);
         return ok((JsonNode) objectMapper.valueToTree(user));

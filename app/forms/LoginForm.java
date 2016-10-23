@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class LoginForm {
     @Constraints.Required
-    public String email;
+    public String emailId;
     @Constraints.Required
     public String password;
     public List<ValidationError> validate() {
         List<ValidationError> errors = new ArrayList<>();
-        User user = User.find.where().eq("email", email).findUnique();
+        User user = User.find.where().eq("email_id", emailId).findUnique();
     if (user == null)
     {
         errors.add(new ValidationError("message", "Incorrect email or passsword"));
@@ -33,11 +33,11 @@ public class LoginForm {
     }
 
     public String getEmail() {
-        return email;
+        return emailId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String emailId) {
+        this.emailId = emailId;
     }
 
     public String getPassword() {

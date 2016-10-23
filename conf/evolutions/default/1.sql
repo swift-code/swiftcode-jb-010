@@ -22,7 +22,7 @@ create table profile (
 
 create table user (
   id                        bigint auto_increment not null,
-  emai_id                   varchar(255),
+  email_id                  varchar(255),
   password                  varchar(255),
   profile_id                bigint,
   constraint uq_user_profile_id unique (profile_id),

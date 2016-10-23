@@ -24,7 +24,7 @@ public class HomeController extends Controller {
         ObjectNode userJson = objectMapper.createObjectNode();
         userJson.put("firstName", profile.firstName);
         userJson.put("lastName", profile.lastName);
-        userJson.put("email", user.emailId);
+        userJson.put("emailId", user.emailId);
         userJson.put("company", profile.company);
         userJson.set(
                 "connections",
@@ -36,7 +36,7 @@ public class HomeController extends Controller {
                                     ObjectNode connectionJson = objectMapper.createObjectNode();
                                     connectionJson.put("firstName", connectionProfile.firstName);
                                     connectionJson.put("lastName", connectionProfile.lastName);
-                                    connectionJson.put("email", connectionUser.emailId);
+                                    connectionJson.put("emailId", connectionUser.emailId);
                                     connectionJson.put("company", connectionProfile.company);
                                     return connectionJson;
                                 }
@@ -74,7 +74,7 @@ public class HomeController extends Controller {
                     ObjectNode suggestionJson = objectMapper.createObjectNode();
                     suggestionJson.put("id", x.id);
                     suggestionJson.put("firstName", suggestionProfile.firstName);
-                    //connectionRequest.put("email", senderRequest.emailId);
+                    //connectionRequest.put("emailId", senderRequest.emailId);
                     //connectionRequest.put("company", senderProfile.company);
                     return suggestionJson;
                 }).collect(Collectors.toList());

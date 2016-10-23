@@ -36,8 +36,8 @@ public class User extends Model {
     public List<ConnectionRequest> connectionRequestsRecieved;
     public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(User.class);
 
-    public User(String emaiId, String password) {
-        this.emailId = emaiId;
+    public User(String emailId, String password) {
+        this.emailId = emailId;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

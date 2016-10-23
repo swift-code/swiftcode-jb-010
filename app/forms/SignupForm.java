@@ -13,16 +13,15 @@ import java.util.List;
  */
 public class SignupForm{
     @Constraints.Required
-    public String email;
-    @Constraints.Required
+    public String emailId;
     public String password;
     @Constraints.Required
-    public String fristName;
+    public String firstName;
     @Constraints.Required
     public String lastName;
     public List<ValidationError> validat(){
         List<ValidationError> errors = new ArrayList<>();
-        User user = User.find.where().eq("email", email).findUnique();
+        User user = User.find.where().eq("email_id", emailId).findUnique();
         if(user != null) {
             errors.add(new ValidationError("message", "this email already exosts"));
         }
@@ -30,11 +29,11 @@ public class SignupForm{
     }
 
     public String getEmail() {
-        return email;
+        return emailId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String emailId) {
+        this.emailId = emailId;
     }
 
     public String getPassword() {
@@ -45,12 +44,12 @@ public class SignupForm{
         this.password = password;
     }
 
-    public String getFristName() {
-        return fristName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFristName(String fristName) {
-        this.fristName = fristName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
