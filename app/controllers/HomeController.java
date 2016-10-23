@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -42,9 +43,51 @@ public class HomeController extends Controller {
                         ).collect(Collectors.toList())
                 )
         );
+        userJson.set(
+                "connectionRequest",
+                objectMapper.valueToTree(
+                        user.connectionRequestsRecieved.stream().filter(
+                                connectionRequest -> connectionRequest.status.equals(
+                                        ConnectionRequest.Status.WAITING)
+                        ).map(
+                                connectionRequest ->{
+                                    Profile senderProfile = Profile.find.byId(connectionRequest.sender.profile.id);
+                                    ObjectNode connectionRequestJson = objectMapper.createObjectNode();
+                                    connectionRequestJson.put("firstName", senderProfile.firstName);
+                                    connectionRequestJson.put("lastName", senderProfile.lastName);
+                                    //connectionRequest.put("email", senderRequest.emailId);
+                                    //connectionRequest.put("company", senderProfile.company);
+                                    return connectionRequest;
+                                }
+                        ).collect(Collectors.toList())
 
-    } ));
+                )
+        );
 
+        User.find.all().stream()
+                .filter(x -> !user.equals(x))
+                .filter(x -> !user.connections.contains(x))
+                .filter(x -> !x.connectionRequestsRecieved.stream().map( y -> y.sender ).collect(Collectors.toList()).contains(x))
+                .filter(x -> !x.connectionRequestsSent.stream().map( y -> y.reciever ).collect(Collectors.toList()).contains(x))
+        .map(x ->{
+                    Profile suggestionProfile = Profile.find.byId(x.profile.id);
+                    ObjectNode suggestionJson = objectMapper.createObjectNode();
+                    suggestionJson.put("id", x.id);
+                    suggestionJson.put("firstName", suggestionProfile.firstName);
+                    //connectionRequest.put("email", senderRequest.emailId);
+                    //connectionRequest.put("company", senderProfile.company);
+                    return suggestionJson;
+                }).collect(Collectors.toList());
+
+
+
+
+
+        return ok(userJson);
 
     }
+
+
+
 }
+
